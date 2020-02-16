@@ -1,0 +1,45 @@
+<h1>Math 24 Challenge</h1>
+<div>
+  Remember your order of operations. Because parentheses are not currently supported, you will need to build your solution out keeping in mind that multiplication will be evaluated first, followed by division, followed by addition, followed by subtraction.
+  <br />
+  <br />
+
+  If you can't solve the problem without parantheses, click the link below to try a new one
+</div>
+
+<% flash.each do |type, msg| %>
+  <% if type = :notice %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% elsif type = :error %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+  <% end %>
+<% end %>
+
+<div>
+  <%= @problem %>
+</div>
+
+<div>
+  <%= link_to "Try A New Problem", "/problem/new" %>
+</div>
+
+<%= form_tag "/solution" do %>
+  <%= hidden_field_tag "problem[first_number]", @problem[0] %>
+  <%= hidden_field_tag "problem[second_number]", @problem[1] %>
+  <%= hidden_field_tag "problem[third_number]", @problem[2] %>
+  <%= hidden_field_tag "problem[fourth_number]", @problem[3] %>
+
+  <%= text_field_tag "solution[first_number]" %>
+  <%= select_tag "solution[first_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+  <%= text_field_tag "solution[second_number]" %>
+  <%= select_tag "solution[second_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+  <%= text_field_tag "solution[third_number]" %>
+  <%= select_tag "solution[third_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+  <%= text_field_tag "solution[fourth_number]" %>
+
+  <%= submit_tag "Solve" %>
+<% end %>
