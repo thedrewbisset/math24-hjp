@@ -13,8 +13,26 @@ class SolutionsController < ApplicationController
   end
 
   def solution
-    sanitized_solution.inject("") do |acc, (k,v)|
-      acc += v
+    sanitized_solution.select{|k| !%w(group_two group_three).include?(k)}.inject("") do |acc, (k,v)|
+      acc += if sanitized_solution[:group_two]
+        if k == 'first_number'
+          "(#{v}"
+        elsif k == 'second_number'
+          "#{v})"
+        else
+          v
+        end
+      elsif sanitized_solution[:group_three]
+        if k == 'first_number'
+          "(#{v}"
+        elsif k == 'third_number'
+          "#{v})"
+        else
+          v
+        end
+      else
+        v
+      end
     end
   end
 
@@ -23,6 +41,6 @@ class SolutionsController < ApplicationController
   end
 
   def sanitized_solution
-    params[:solution].permit(:first_number, :first_operator, :second_number, :second_operator, :third_number, :third_operator, :fourth_number).to_h
+    params[:solution].permit(:first_number, :first_operator, :second_number, :second_operator, :third_number, :third_operator, :fourth_number, :group_two, :group_three).to_h
   end
 end

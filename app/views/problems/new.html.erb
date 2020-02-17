@@ -1,45 +1,59 @@
-<h1>Math 24 Challenge</h1>
-<div>
-  Remember your order of operations. Because parentheses are not currently supported, you will need to build your solution out keeping in mind that multiplication will be evaluated first, followed by division, followed by addition, followed by subtraction.
-  <br />
-  <br />
+<div id="container">
+  <h1>Math 24 Challenge</h1>
+  <div class="section">
+    Remember to consider your order of operations (multiplication, division, addition, subtraction). If your solution requires parentheses you can use one of the two checkboxes to specify whether you'd like the first two or first three numbers grouped so that they are evaluated before the remaining operations. 
+  </div>
 
-  If you can't solve the problem without parantheses, click the link below to try a new one
-</div>
+  <% flash.each do |type, msg| %>
+    <% if type == 'notice' %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% elsif type == 'error' %>
+      <div class="alert alert-danger">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
 
-<% flash.each do |type, msg| %>
-  <% if type = :notice %>
-    <div class="alert alert-info">
-      <%= msg %>
+  <div class="section">
+    Problem: <%= @problem.join(" ") %>
+  </div>
+
+  <div class="section">
+    <%= link_to "Try A New Problem", "/problem/new" %>
+  </div>
+
+  <%= form_tag "/solution" do %>
+    <%= hidden_field_tag "problem[first_number]", @problem[0] %>
+    <%= hidden_field_tag "problem[second_number]", @problem[1] %>
+    <%= hidden_field_tag "problem[third_number]", @problem[2] %>
+    <%= hidden_field_tag "problem[fourth_number]", @problem[3] %>
+
+    <div id="solution" class="section">
+      <div>
+        <%= number_field_tag "solution[first_number]", nil, in: 1...9 %>
+        <%= select_tag "solution[first_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      <%= number_field_tag "solution[second_number]", nil, in: 1...9 %>
+      <%= select_tag "solution[second_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      <%= number_field_tag "solution[third_number]", nil, in: 1...9 %>
+      <%= select_tag "solution[third_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      <%= number_field_tag "solution[fourth_number]", nil, in: 1...9 %>
+      </div>
     </div>
-  <% elsif type = :error %>
-    <div class="alert alert-info">
-      <%= msg %>
+    <div class="section">
+      <div>
+        <%= check_box_tag "solution[group_two]", 1 %>
+        <%= label_tag "solution[group_two]", "Group first two numbers" %>
+      </div>
+      <div>
+        <%= check_box_tag "solution[group_three]", 1 %>
+        <%= label_tag "solution[group_three]", "Group first three numbers" %>
+      </div>
+    </div>
+
+    <div class="section">
+      <%= submit_tag "Solve" %>
     </div>
   <% end %>
-<% end %>
-
-<div>
-  <%= @problem %>
 </div>
-
-<div>
-  <%= link_to "Try A New Problem", "/problem/new" %>
-</div>
-
-<%= form_tag "/solution" do %>
-  <%= hidden_field_tag "problem[first_number]", @problem[0] %>
-  <%= hidden_field_tag "problem[second_number]", @problem[1] %>
-  <%= hidden_field_tag "problem[third_number]", @problem[2] %>
-  <%= hidden_field_tag "problem[fourth_number]", @problem[3] %>
-
-  <%= text_field_tag "solution[first_number]" %>
-  <%= select_tag "solution[first_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
-  <%= text_field_tag "solution[second_number]" %>
-  <%= select_tag "solution[second_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
-  <%= text_field_tag "solution[third_number]" %>
-  <%= select_tag "solution[third_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
-  <%= text_field_tag "solution[fourth_number]" %>
-
-  <%= submit_tag "Solve" %>
-<% end %>
