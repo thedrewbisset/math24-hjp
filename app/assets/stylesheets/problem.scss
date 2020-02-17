@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-div {
+div.section {
   padding: 1%;
+}
+
+h1 {
+  text-align: center;
+}
+
+#container {
+  margin: 0 auto;
+  width: 50%;
+  padding-top: 10px;
 }
