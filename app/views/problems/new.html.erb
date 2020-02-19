@@ -34,10 +34,16 @@
       <div>
         <%= number_field_tag "solution[first_number]", nil, in: 1...9 %>
         <%= select_tag "solution[first_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      </div>
+      <div>
       <%= number_field_tag "solution[second_number]", nil, in: 1...9 %>
       <%= select_tag "solution[second_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      </div>
+      <div>
       <%= number_field_tag "solution[third_number]", nil, in: 1...9 %>
       <%= select_tag "solution[third_operator]", options_for_select([[ 'Plus', '+' ], [ 'Minus', '-' ], [ 'Multiplied By', '*' ], [ 'Divided By', '/' ]]) %>
+      </div>
+      <div>
       <%= number_field_tag "solution[fourth_number]", nil, in: 1...9 %>
       </div>
     </div>
@@ -50,6 +56,9 @@
         <%= check_box_tag "solution[group_three]", 1 %>
         <%= label_tag "solution[group_three]", "Group first three numbers" %>
       </div>
+      <div>
+        <%= check_box_tag "solution[group_two_pair]", 1 %>
+        <%= label_tag "solution[group_two_pair]", "Group first and second, third and fourth numbers" %>
     </div>
 
     <div class="section">
