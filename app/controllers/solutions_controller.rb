@@ -1,6 +1,7 @@
 class SolutionsController < ApplicationController
   def create
-    if Math24.check(problem, solution)
+    record_score
+    if solved?
       redirect_to new_problem_url, flash: { notice: "You got it right, rock on!" }
     else
       redirect_to new_problem_url(params: { problem: problem }), flash: { error: "Incorrect, try again!" }
@@ -8,6 +9,24 @@ class SolutionsController < ApplicationController
   end
 
   private
+  def record_score
+    build_scorecard unless session['scorecard']
+    session['scorecard']['attempts'] += 1
+    if solved?
+      session['scorecard']['correct'] += 1
+    else
+      session['scorecard']['incorrect'] += 1
+    end
+  end
+
+  def build_scorecard
+    session['scorecard'] = HashWithIndifferentAccess.new({ attempts: 0, correct: 0, incorrect: 0 })
+  end
+
+  def solved?
+   @solved ||= Math24.check(problem, solution)
+  end
+
   def problem
     sanitized_problem.values.map(&:to_i)
   end

@@ -65,4 +65,20 @@
       <%= submit_tag "Solve" %>
     </div>
   <% end %>
+
+  <% if session['scorecard'] %>
+    <div class="section">
+      <h4>Score</h4>
+      <div>
+        Number of Attempts: <%= session['scorecard']['attempts'] %>
+      </div>
+      <div>
+        Number Correct: <%= session['scorecard']['correct'] %>
+      </div>
+      <div>
+        Number Incorrect: <%= session['scorecard']['incorrect'] %>
+      </div>
+    </div>
+  <% end %>
+
 </div>
